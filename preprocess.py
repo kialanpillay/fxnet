@@ -1,5 +1,4 @@
 from datetime import date
-from time import strptime
 
 import numpy as np
 import pandas as pd
@@ -27,10 +26,22 @@ def process():
     df_EU = pd.read_csv("data/EU_PPI.csv")
     df['PPI'] = np.nan
     for index, row in df_EU.iterrows():
-        start_year = str(strptime(row['TIME'], '%Y-%m'))
-        year = int(str(row['TIME'])[0:str(row['TIME']).index("-")])
-        year_ = year + 1
-        end_year = str(strptime(str(year_) + str(row['TIME'])[str(row['TIME']).index("-")::], '%Y-%m'))
+        y = int(str(row['TIME'])[0:str(row['TIME']).index("-")])
+        m = int(str(row['TIME'])[str(row['TIME']).index("-") + 1::])
+
+        start_year = str(y) + "-" + str(m) + "-01"
+        if m == 12:
+            y = str(y + 1)
+        else:
+            y = str(y)
+            m = m + 1
+
+        if m < 10:
+            m = "0" + str(m)
+        else:
+            m = str(m)
+
+        end_year = y + "-" + m + "-01"
         mask = (df['Date'] >= start_year) & (df['Date'] < end_year)
         df.loc[mask, 'PPI'] = row['Value'] / df_US.iloc[index]['Value']
 
