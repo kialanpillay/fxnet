@@ -34,7 +34,7 @@ def process():
         mask = (df['Date'] >= start_year) & (df['Date'] < end_year)
         df.loc[mask, 'PPI'] = row['Value'] / df_US.iloc[index]['Value']
 
-    df.to_csv("data/clean.csv")
+    df.to_csv("data/FXNET.csv", index=False)
 
 
 if __name__ == "__main__":
