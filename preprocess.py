@@ -20,7 +20,7 @@ def process():
             if row['Value'] == 0:
                 df.loc[mask, v] = 0
             else:
-                df.loc[mask, v] = df_EU.iloc[index]['Value'] / row['Value']
+                df.loc[mask, v] = df_EU.iloc[index]['Value'] - row['Value']
 
     df_US = pd.read_csv("data/US_PPI.csv")
     df_EU = pd.read_csv("data/EU_PPI.csv")
@@ -45,7 +45,7 @@ def process():
         mask = (df['Date'] >= start_year) & (df['Date'] < end_year)
         df.loc[mask, 'PPI'] = row['Value'] / df_US.iloc[index]['Value']
 
-    df.to_csv("data/FXNET.csv", index=False)
+    df.to_csv("data/FXNet.csv", index=False)
 
 
 if __name__ == "__main__":
