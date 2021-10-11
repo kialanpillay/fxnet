@@ -1,0 +1,117 @@
+network "FXNet" {
+// written by aGrUM 0.22.2
+}
+
+variable InterestRate {
+   type discrete[3] {Positive, Equal, Negative};
+}
+
+variable InflationRate {
+   type discrete[2] {Positive, Negative};
+}
+
+variable GDP {
+   type discrete[2] {Positive, Negative};
+}
+
+variable PPI {
+   type discrete[2] {Positive, Negative};
+}
+
+variable PublicDebt {
+   type discrete[2] {Positive, Negative};
+}
+
+variable CurrentAccount {
+   type discrete[2] {Positive, Negative};
+}
+
+variable TermsOfTrade {
+   type discrete[2] {Positive, Negative};
+}
+
+variable ClosePrice {
+   type discrete[3] {Up, Sideways, Down};
+}
+
+variable Sentiment {
+   type discrete[3] {Positive, Neutral, Negative};
+}
+
+variable USPoliticalState {
+   type discrete[2] {Stable, Unstable};
+}
+
+probability (InterestRate | GDP) {
+   (Positive) 0.7 0.25 0.05;
+   (Negative) 0.05 0.25 0.7;
+}
+probability (InflationRate | PublicDebt, PPI) {
+   (Positive, Positive) 0.9 0.1;
+   (Negative, Positive) 0.6 0.4;
+   (Positive, Negative) 0.4 0.6;
+   (Negative, Negative) 0.1 0.9;
+}
+probability (GDP | USPoliticalState) {
+   (Stable) 0.4 0.6;
+   (Unstable) 0.7 0.3;
+}
+probability (PPI) {
+   default 0.5 0.5;
+}
+probability (PublicDebt) {
+   default 0.5 0.5;
+}
+probability (CurrentAccount) {
+   default 0.5 0.5;
+}
+probability (TermsOfTrade | CurrentAccount) {
+   (Positive) 0.8 0.2;
+   (Negative) 0.2 0.8;
+}
+probability (ClosePrice | Sentiment, InterestRate, TermsOfTrade, InflationRate) {
+   (Positive, Positive, Positive, Positive) 0.3 0.4 0.3;
+   (Neutral, Positive, Positive, Positive) 0 0 0;
+   (Negative, Positive, Positive, Positive) 0 0 0;
+   (Positive, Equal, Positive, Positive) 0.2 0.2 0.6;
+   (Neutral, Equal, Positive, Positive) 0 0 0;
+   (Negative, Equal, Positive, Positive) 0.5 0.3 0.2;
+   (Positive, Negative, Positive, Positive) 0.1 0.1 0.8;
+   (Neutral, Negative, Positive, Positive) 0 0 0;
+   (Negative, Negative, Positive, Positive) 0.3 0.4 0.3;
+   (Positive, Positive, Negative, Positive) 0.3 0.2 0.5;
+   (Neutral, Positive, Negative, Positive) 0 0 0;
+   (Negative, Positive, Negative, Positive) 0.3 0.4 0.3;
+   (Positive, Equal, Negative, Positive) 0 0 0;
+   (Neutral, Equal, Negative, Positive) 0 0 0;
+   (Negative, Equal, Negative, Positive) 0.3 0.3 0.6;
+   (Positive, Negative, Negative, Positive) 0.05 0.05 0.9;
+   (Neutral, Negative, Negative, Positive) 0 0 0;
+   (Negative, Negative, Negative, Positive) 0 0 0;
+   (Positive, Positive, Positive, Negative) 0.5 0.3 0.2;
+   (Neutral, Positive, Positive, Negative) 0 0 0;
+   (Negative, Positive, Positive, Negative) 0.9 0.05 0.05;
+   (Positive, Equal, Positive, Negative) 0.6 0.2 0.2;
+   (Neutral, Equal, Positive, Negative) 0 0 0;
+   (Negative, Equal, Positive, Negative) 0.8 0.2 0.2;
+   (Positive, Negative, Positive, Negative) 0 0 0;
+   (Neutral, Negative, Positive, Negative) 0 0 0;
+   (Negative, Negative, Positive, Negative) 0.6 0.2 0.2;
+   (Positive, Positive, Negative, Negative) 0 0 0;
+   (Neutral, Positive, Negative, Negative) 0 0 0;
+   (Negative, Positive, Negative, Negative) 0.6 0.2 0.2;
+   (Positive, Equal, Negative, Negative) 0.2 0.3 0.5;
+   (Neutral, Equal, Negative, Negative) 0 0 0;
+   (Negative, Equal, Negative, Negative) 0 0 0;
+   (Positive, Negative, Negative, Negative) 0.15 0.15 0.7;
+   (Neutral, Negative, Negative, Negative) 0 0 0;
+   (Negative, Negative, Negative, Negative) 0.2 0.4 0.4;
+}
+probability (Sentiment | USPoliticalState) {
+   (Stable) 0.4 0.3 0.3;
+   (Unstable) 0.1 0.05 0.85;
+}
+probability (USPoliticalState) {
+   default 0.9 0.1;
+}
+
