@@ -45,6 +45,16 @@ def bayesian_network_inference():
     ie.makeInference()
     print(ie.posterior("ClosePrice"))
 
+    # P(InflationRate | PPI = Negative)
+    ie.setEvidence({'PPI': 'Negative'})
+    ie.makeInference()
+    print(ie.posterior("InflationRate"))
+
+    # P(InterestRate | USPoliticalState = Stable)
+    ie.setEvidence({'USPoliticalState': 'Stable'})
+    ie.makeInference()
+    print(ie.posterior("InterestRate"))
+
 
 def decision_network_inference(df=None, evidence=False, year=None):
     dn = networks.decision_network()
