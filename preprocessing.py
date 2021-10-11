@@ -1,3 +1,4 @@
+import os
 from datetime import date
 
 import numpy as np
@@ -29,7 +30,7 @@ def process():
         y = int(str(row['TIME'])[0:str(row['TIME']).index("-")])
         m = int(str(row['TIME'])[str(row['TIME']).index("-") + 1::])
 
-        start_year = str(y) + "-" + str(m) + "-01"
+        LB = str(y) + "-" + str(m) + "-01"
         if m == 12:
             y = str(y + 1)
         else:
@@ -41,11 +42,18 @@ def process():
         else:
             m = str(m)
 
-        end_year = y + "-" + m + "-01"
-        mask = (df['Date'] >= start_year) & (df['Date'] < end_year)
+        UB = y + "-" + m + "-01"
+        mask = (df['Date'] >= LB) & (df['Date'] < UB)
         df.loc[mask, 'PPI'] = row['Value'] / df_US.iloc[index]['Value']
 
     df.to_csv("data/FXNet.csv", index=False)
+
+
+def load():
+    if not os.path.isfile("data/FXNet.csv"):
+        process()
+    df = pd.read_csv("data/FXNET.csv")
+    return df[~df.isnull().any(axis=1)]
 
 
 if __name__ == "__main__":
