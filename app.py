@@ -1,22 +1,30 @@
 import argparse
 
-import pandas as pd
+from art import tprint
 
-from evaluation import bayesian_network_inference, decision_network_inference
+import evaluation
+import preprocessing
 
 
 def main():
-    df = pd.read_csv("data/FXNET.csv")
-    df = df[~df.isnull().any(axis=1)]
+    tprint("FXNet")
+    print("FOREX Trading Decision Support Tool")
+    print("© FXNet 2021")
+    print("-" * 40)
+    print()
 
     if args.test:
-        bayesian_network_inference()
+        evaluation.bayesian_network_inference()
 
-    decision_network_inference()
+    if args.predict:
+        df = preprocessing.load()
+        evaluation.decision_network_inference(df, evidence=args.evidence)
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--test', action='store_true', help="Evaluation mode")
+    parser = argparse.ArgumentParser(description="EUR/USD Trading Decision Support Tool")
+    parser.add_argument('--test', action='store_true', help="Bayesian network inference")
+    parser.add_argument('--predict', action='store_true', help="Decision network decision support")
+    parser.add_argument('--evidence', action='store_true', help="Generate hard evidence")
     args = parser.parse_args()
     main()
