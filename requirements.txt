@@ -1,4 +1,5 @@
 art
+argparse
 numpy
 matplotlib
 pandas
