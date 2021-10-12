@@ -1,38 +1,40 @@
 from datetime import date
 
+import networks
 import preprocessing
 from inference import bayesian_network_inference, decision_network_inference
 
 
 def bayesian_network_test():
     # P(ClosePrice)
-    bayesian_network_inference("ClosePrice")
-    print(bayesian_network_inference("ClosePrice"))
+    bn = networks.bayesian_network()
+    bayesian_network_inference(bn, "ClosePrice")
+    print(bayesian_network_inference(bn, "ClosePrice"))
 
     # P(ClosePrice | InterestRate = Positive)
-    print(bayesian_network_inference("ClosePrice", {'InterestRate': 'Positive'}))
+    print(bayesian_network_inference(bn, "ClosePrice", {'InterestRate': 'Positive'}))
 
     # P(ClosePrice | CurrentAccount = Positive)
-    print(bayesian_network_inference("ClosePrice", {'CurrentAccount': 'Positive'}))
+    # print(bayesian_network_inference(bn, "ClosePrice", {'CurrentAccount': 'Positive'}))
 
     # P(ClosePrice | PPI = Negative)
-    print(bayesian_network_inference("ClosePrice", {'PPI': 'Negative'}))
+    print(bayesian_network_inference(bn, "ClosePrice", {'PPI': 'Negative'}))
 
     # P(ClosePrice | PPI = Negative, PublicDebt = Negative)
-    print(bayesian_network_inference("ClostPrice", {'PPI': 'Negative', 'PublicDebt': 'Negative'}))
+    # print(bayesian_network_inference(bn, "ClosePrice", {'PPI': 'Negative', 'PublicDebt': 'Negative'}))
 
     # P(ClosePrice | PPI = Negative, PublicDebt = Negative, GDP = Positive)
-    print(bayesian_network_inference("ClosePrice", {'PPI': 'Negative', 'PublicDebt': 'Negative', 'GDP': 'Positive'}))
+    print(bayesian_network_inference(bn, "ClosePrice", {'PPI': 'Negative', 'PublicDebt': 'Negative', 'GDP': 'Positive'}))
 
     # P(ClosePrice | PPI = Negative, PublicDebt = Negative, GDP = Positive, Sentiment = Negative)
-    print(bayesian_network_inference("ClosePrice", {'PPI': 'Negative', 'PublicDebt': 'Negative', 'GDP': 'Positive',
-                                                    'Sentiment': 'Negative'}))
+    # print(bayesian_network_inference(bn, "ClosePrice", {'PPI': 'Negative', 'PublicDebt': 'Negative', 'GDP': 'Positive',
+    #                                                'Sentiment': 'Negative'}))
 
     # P(InflationRate | PPI = Negative)
-    print(bayesian_network_inference("InflationRate", {'PPI': 'Negative'}))
+    print(bayesian_network_inference(bn, "InflationRate", {'PPI': 'Negative'}))
 
     # P(InterestRate | USPoliticalState = Stable)
-    print(bayesian_network_inference("InterestRate", {'USPoliticalState': 'Stable'}))
+    print(bayesian_network_inference(bn, "InterestRate", {'USPoliticalState': 'Stable'}))
 
 
 def backtest(trade_size=1):
@@ -57,5 +59,5 @@ def backtest(trade_size=1):
 
             points = multiplier * (rate - rate_) * 100000
             PL = round(points * trade_size, 2)
-            print('EUR/USD {0}-Month Profit/Loss ({1}): ${2}'.format(month, year, PL))
+            print('{0}-Month Profit/Loss ({1}): ${2}'.format(month, year, PL))
         print()

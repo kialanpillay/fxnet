@@ -6,9 +6,8 @@ import pyAgrum as gum
 import networks
 
 
-def bayesian_network_inference(target, evidence={}):
-    bn = networks.bayesian_network()
-    ie = gum.LazyPropagation(bn)
+def bayesian_network_inference(bn, target, evidence={}):
+    ie = gum.VariableElimination(bn)
 
     # P(target | evidence)
     ie.setEvidence(evidence)

@@ -20,7 +20,8 @@ def main():
     if args.predict:
         df = preprocessing.load()
         inference.decision_network_inference(df=df, evidence=args.evidence)
-        evaluation.backtest()
+        if args.test:
+            evaluation.backtest()
 
 
 if __name__ == "__main__":
