@@ -3,6 +3,7 @@ import argparse
 from art import tprint
 
 import evaluation
+import inference
 import preprocessing
 
 
@@ -14,11 +15,12 @@ def main():
     print()
 
     if args.test:
-        evaluation.bayesian_network_inference()
+        evaluation.bayesian_network_test()
 
     if args.predict:
         df = preprocessing.load()
-        evaluation.decision_network_inference(df, evidence=args.evidence)
+        inference.decision_network_inference(df=df, evidence=args.evidence)
+        evaluation.backtest()
 
 
 if __name__ == "__main__":

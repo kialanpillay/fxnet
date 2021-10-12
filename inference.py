@@ -1,0 +1,70 @@
+from datetime import date
+
+import numpy as np
+import pyAgrum as gum
+
+import networks
+
+
+def bayesian_network_inference(target, evidence={}):
+    bn = networks.bayesian_network()
+    ie = gum.LazyPropagation(bn)
+
+    # P(target | evidence)
+    ie.setEvidence(evidence)
+    ie.makeInference()
+    return ie.posterior(target)
+
+
+def decision_network_inference(df=None, evidence=False, year=None):
+    dn = networks.decision_network()
+    ie = gum.ShaferShenoyLIMIDInference(dn)
+
+    if year:
+        mask = (df['Date'] >= str(date(year - 1, 1, 1))) & (df['Date'] < str(date(year, 1, 1)))
+        df = df.loc[mask]
+
+    if evidence:
+        ie.addEvidence('GDP', hard_evidence(df['GDP'].values, 'GDP'))
+        ie.addEvidence('InterestRate', hard_evidence(df['INTRATE'].values, 'InterestRate'))
+        ie.addEvidence('PPI', hard_evidence(df['PPI'].values, 'PPI'))
+        ie.addEvidence('PublicDebt', hard_evidence(df['GGDEBT'].values, 'PublicDebt'))
+        ie.addEvidence('InflationRate', hard_evidence(df['INFRATE'].values, 'InflationRate'))
+        ie.addEvidence('CurrentAccount', hard_evidence(df['BOP'].values, 'CurrentAccount'))
+        ie.addEvidence('TermsOfTrade', hard_evidence(df['TERMTRADE'].values, 'TermsOfTrade'))
+
+    ie.makeInference()
+    var = ie.posteriorUtility('Trade').variable('Trade')
+
+    decision_index = np.argmax(ie.posteriorUtility('Trade').toarray())
+    decision = var.label(int(decision_index))
+    # print(ie.posteriorUtility('Trade'))
+    print('EUR/USD Trade Decision: {0}'.format(decision))
+
+    return decision
+
+
+def hard_evidence(feature, label):
+    e = feature[-1]
+    if label == 'InterestRate':
+        if e > 0:
+            return [1, 0, 0]
+        elif e == 0:
+            return [0, 1, 0]
+        else:
+            return [0, 0, 1]
+    elif label in ['InflationRate', 'GDP', 'PPI', 'PublicDebt', 'CurrentAccount', 'TermsOfTrade']:
+        if e > 0:
+            return [1, 0]
+        else:
+            return [0, 1]
+    elif label == 'ClosePrice':
+        e_ = feature[-60]
+        if e / e_ > 1.01:
+            return [1, 0, 0]
+        elif e / e_ < 0.99:
+            return [0, 0, 1]
+        else:
+            return [0, 1, 0]
+    else:
+        pass
