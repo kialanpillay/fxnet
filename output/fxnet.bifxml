@@ -55,19 +55,18 @@
 </VARIABLE>
 
 <VARIABLE TYPE="nature">
+	<NAME>USDSentiment</NAME>
+	<PROPERTY></PROPERTY>
+	<OUTCOME>Positive</OUTCOME>
+	<OUTCOME>Negative</OUTCOME>
+</VARIABLE>
+
+<VARIABLE TYPE="nature">
 	<NAME>ClosePrice</NAME>
 	<PROPERTY></PROPERTY>
 	<OUTCOME>Up</OUTCOME>
 	<OUTCOME>Sideways</OUTCOME>
 	<OUTCOME>Down</OUTCOME>
-</VARIABLE>
-
-<VARIABLE TYPE="nature">
-	<NAME>Sentiment</NAME>
-	<PROPERTY></PROPERTY>
-	<OUTCOME>Positive</OUTCOME>
-	<OUTCOME>Neutral</OUTCOME>
-	<OUTCOME>Negative</OUTCOME>
 </VARIABLE>
 
 <VARIABLE TYPE="nature">
@@ -126,17 +125,17 @@
 	<TABLE>0.8 0.2 0.2 0.8 </TABLE>
 </DEFINITION>
 <DEFINITION>
-	<FOR>ClosePrice</FOR>
-	<GIVEN>InterestRate</GIVEN>
-	<GIVEN>InflationRate</GIVEN>
-	<GIVEN>TermsOfTrade</GIVEN>
-	<GIVEN>Sentiment</GIVEN>
-	<TABLE>0.3 0.4 0.3 0 0 0 0 0 0 0.2 0.2 0.6 0 0 0 0.5 0.3 0.2 0.1 0.1 0.8 0 0 0 0.3 0.4 0.3 0.3 0.2 0.5 0 0 0 0.3 0.4 0.3 0 0 0 0 0 0 0.3 0.3 0.6 0.05 0.05 0.9 0 0 0 0 0 0 0.5 0.3 0.2 0 0 0 0.9 0.05 0.05 0.6 0.2 0.2 0 0 0 0.8 0.2 0.2 0 0 0 0 0 0 0.6 0.2 0.2 0 0 0 0 0 0 0.6 0.2 0.2 0.2 0.3 0.5 0 0 0 0 0 0 0.15 0.15 0.7 0 0 0 0.2 0.4 0.4 </TABLE>
+	<FOR>USDSentiment</FOR>
+	<GIVEN>USPoliticalState</GIVEN>
+	<TABLE>0.6 0.4 0.1 0.9 </TABLE>
 </DEFINITION>
 <DEFINITION>
-	<FOR>Sentiment</FOR>
-	<GIVEN>USPoliticalState</GIVEN>
-	<TABLE>0.4 0.3 0.3 0.1 0.05 0.85 </TABLE>
+	<FOR>ClosePrice</FOR>
+	<GIVEN>InterestRate</GIVEN>
+	<GIVEN>USDSentiment</GIVEN>
+	<GIVEN>InflationRate</GIVEN>
+	<GIVEN>TermsOfTrade</GIVEN>
+	<TABLE>0.3 0.4 0.3 0 0 0 0.2 0.2 0.6 0.5 0.3 0.2 0.1 0.1 0.8 0.3 0.4 0.3 0.3 0.2 0.5 0.3 0.4 0.3 0 0 0 0.3 0.3 0.6 0.05 0.05 0.9 0 0 0 0.5 0.3 0.2 0.9 0.05 0.05 0.6 0.2 0.2 0.8 0.2 0.2 0 0 0 0.6 0.2 0.2 0 0 0 0.6 0.2 0.2 0.2 0.3 0.5 0 0 0 0.15 0.15 0.7 0.2 0.4 0.4 </TABLE>
 </DEFINITION>
 <DEFINITION>
 	<FOR>USPoliticalState</FOR>
@@ -144,8 +143,8 @@
 </DEFINITION>
 <DEFINITION>
 	<FOR>TradeUtility</FOR>
-	<GIVEN>ClosePrice</GIVEN>
 	<GIVEN>Trade</GIVEN>
+	<GIVEN>ClosePrice</GIVEN>
 	<TABLE>100 20 -100 20 50 20 -100 20 100 </TABLE>
 </DEFINITION>
 <DEFINITION>
