@@ -67,17 +67,20 @@ def use_case():
     # Retail Investor
     print("Use Case 1: Retail Investor")
     prior_information = {'InterestRate': 'Positive', 'GDP': 'Positive'}
+    print("Prior Information: ", prior_information)
     decision_network_inference(evidence=True, prior_information=prior_information)
     print()
 
     # Company
     print("Use Case 2: Company")
     prior_information = {'PPI': 'Positive'}
+    print("Prior Information: ", prior_information)
     decision_network_inference(evidence=True, prior_information=prior_information)
     print()
 
     # Fund Manager
     print("Use Case 3: Fund Manager")
     prior_information = {'CurrentAccount': 'Negative', 'GDP': 'Negative', 'InflationRate': 'Negative'}
+    print("Prior Information: ", prior_information)
     decision_network_inference(evidence=True, prior_information=prior_information)
     print()
