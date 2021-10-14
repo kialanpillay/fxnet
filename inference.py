@@ -43,21 +43,21 @@ def decision_network_inference(df=None, evidence=False, year=None):
     return decision
 
 
-def hard_evidence(feature, label):
+def hard_evidence(feature, name):
     e = feature[-1]
-    if label == 'InterestRate':
+    if name == 'InterestRate':
         if e > 0:
             return [1, 0, 0]
         elif e == 0:
             return [0, 1, 0]
         else:
             return [0, 0, 1]
-    elif label in ['InflationRate', 'GDP', 'PPI', 'PublicDebt', 'CurrentAccount', 'TermsOfTrade']:
+    elif name in ['InflationRate', 'GDP', 'PPI', 'PublicDebt', 'CurrentAccount', 'TermsOfTrade']:
         if e > 0:
             return [1, 0]
         else:
             return [0, 1]
-    elif label == 'ClosePrice':
+    elif name == 'ClosePrice':
         e_ = feature[-60]
         if e / e_ > 1.01:
             return [1, 0, 0]
