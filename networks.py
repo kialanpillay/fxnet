@@ -101,7 +101,6 @@ def bayesian_network():
     bn.cpt("ClosePrice")[{'USDSentiment': 'Negative', 'InterestRate': 'Negative', 'TermsOfTrade': 'Positive',
                           'InflationRate': 'Negative'}] = [0.6, 0.2, 0.2]
 
-    print(bn)
     gum.saveBN(bn, 'output/fx_bayesian_network.bif')
     return bn
 

@@ -14,15 +14,15 @@ def main():
     print("-" * 40)
     print()
 
-    if args.test:
-        evaluation.bayesian_network_test()
-
     if args.predict:
         df = preprocessing.load()
         inference.decision_network_inference(evidence=args.evidence, df=df)
-        if args.test:
-            evaluation.backtest()
-            evaluation.use_case()
+        print()
+
+    if args.test:
+        evaluation.bayesian_network_test()
+        evaluation.backtest()
+        evaluation.use_case()
 
 
 if __name__ == "__main__":

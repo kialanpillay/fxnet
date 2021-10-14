@@ -6,6 +6,9 @@ from inference import bayesian_network_inference, decision_network_inference
 
 
 def bayesian_network_test():
+    print("-" * 40)
+    print("Bayesian Network Inference Test")
+    print("-" * 40)
     # P(ClosePrice)
     bn = networks.bayesian_network()
     bayesian_network_inference(bn, "ClosePrice")
@@ -29,6 +32,9 @@ def bayesian_network_test():
 
 
 def backtest(trade_size=1):
+    print("-" * 40)
+    print("Decision Network Backtesting")
+    print("-" * 40)
     df = preprocessing.load()
     for year in range(2017, 2021):
         mask = (df['Date'] >= str(date(year - 1, 1, 1))) & (df['Date'] < str(date(year, 1, 1)))
@@ -55,6 +61,9 @@ def backtest(trade_size=1):
 
 
 def use_case():
+    print("-" * 40)
+    print("Use Case Simulation")
+    print("-" * 40)
     # Retail Investor
     print("Use Case 1: Retail Investor")
     prior_information = {'InterestRate': 'Positive', 'GDP': 'Positive'}
@@ -62,13 +71,13 @@ def use_case():
     print()
 
     # Company
-    print("Use Case 1: Company")
+    print("Use Case 2: Company")
     prior_information = {'PPI': 'Positive'}
     decision_network_inference(evidence=True, prior_information=prior_information)
     print()
 
     # Fund Manager
-    print("Use Case 1: Fund Manager")
+    print("Use Case 3: Fund Manager")
     prior_information = {'CurrentAccount': 'Negative', 'GDP': 'Negative', 'InflationRate': 'Negative'}
     decision_network_inference(evidence=True, prior_information=prior_information)
     print()
