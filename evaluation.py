@@ -10,24 +10,30 @@ def bayesian_network_test():
     print("Bayesian Network Inference Test")
     print("-" * 40)
     # P(ClosePrice)
+    print("P(ClosePrice)")
     bn = networks.bayesian_network()
     bayesian_network_inference(bn, "ClosePrice")
     print(bayesian_network_inference(bn, "ClosePrice"))
 
     # P(ClosePrice | InterestRate = Positive)
+    print("P(ClosePrice | InterestRate = Positive)")
     print(bayesian_network_inference(bn, "ClosePrice", {'InterestRate': 'Positive'}))
 
     # P(ClosePrice | PPI = Negative)
+    print("P(ClosePrice | PPI = Negative)")
     print(bayesian_network_inference(bn, "ClosePrice", {'PPI': 'Negative'}))
 
     # P(ClosePrice | PPI = Negative, PublicDebt = Negative, GDP = Positive)
+    print("P(ClosePrice | PPI = Negative, PublicDebt = Negative, GDP = Positive)")
     print(
         bayesian_network_inference(bn, "ClosePrice", {'PPI': 'Negative', 'PublicDebt': 'Negative', 'GDP': 'Positive'}))
 
     # P(InflationRate | PPI = Negative)
+    print("P(InflationRate | PPI = Negative)")
     print(bayesian_network_inference(bn, "InflationRate", {'PPI': 'Negative'}))
 
     # P(InterestRate | USPoliticalState = Stable)
+    print("P(InterestRate | USPoliticalState = Stable)")
     print(bayesian_network_inference(bn, "InterestRate", {'USPoliticalState': 'Stable'}))
 
 
