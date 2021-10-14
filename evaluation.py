@@ -14,21 +14,12 @@ def bayesian_network_test():
     # P(ClosePrice | InterestRate = Positive)
     print(bayesian_network_inference(bn, "ClosePrice", {'InterestRate': 'Positive'}))
 
-    # P(ClosePrice | CurrentAccount = Positive)
-    # print(bayesian_network_inference(bn, "ClosePrice", {'CurrentAccount': 'Positive'}))
-
     # P(ClosePrice | PPI = Negative)
     print(bayesian_network_inference(bn, "ClosePrice", {'PPI': 'Negative'}))
 
-    # P(ClosePrice | PPI = Negative, PublicDebt = Negative)
-    # print(bayesian_network_inference(bn, "ClosePrice", {'PPI': 'Negative', 'PublicDebt': 'Negative'}))
-
     # P(ClosePrice | PPI = Negative, PublicDebt = Negative, GDP = Positive)
-    print(bayesian_network_inference(bn, "ClosePrice", {'PPI': 'Negative', 'PublicDebt': 'Negative', 'GDP': 'Positive'}))
-
-    # P(ClosePrice | PPI = Negative, PublicDebt = Negative, GDP = Positive, Sentiment = Negative)
-    # print(bayesian_network_inference(bn, "ClosePrice", {'PPI': 'Negative', 'PublicDebt': 'Negative', 'GDP': 'Positive',
-    #                                                'Sentiment': 'Negative'}))
+    print(
+        bayesian_network_inference(bn, "ClosePrice", {'PPI': 'Negative', 'PublicDebt': 'Negative', 'GDP': 'Positive'}))
 
     # P(InflationRate | PPI = Negative)
     print(bayesian_network_inference(bn, "InflationRate", {'PPI': 'Negative'}))
@@ -44,7 +35,7 @@ def backtest(trade_size=1):
         df_prev = df.loc[mask]
         mask = (df['Date'] >= str(date(year, 1, 1))) & (df['Date'] < str(date(year + 1, 1, 1)))
         df_next = df.loc[mask]
-        decision = decision_network_inference(df, evidence=True, year=year)
+        decision = decision_network_inference(evidence=True, df=df, year=year)
 
         if decision == "Buy":
             multiplier = 1
@@ -61,3 +52,23 @@ def backtest(trade_size=1):
             PL = round(points * trade_size, 2)
             print('{0}-Month Profit/Loss ({1}): ${2}'.format(month, year, PL))
         print()
+
+
+def use_case():
+    # Retail Investor
+    print("Use Case 1: Retail Investor")
+    prior_information = {'InterestRate': 'Positive', 'GDP': 'Positive'}
+    decision_network_inference(evidence=True, prior_information=prior_information)
+    print()
+
+    # Company
+    print("Use Case 1: Company")
+    prior_information = {'PPI': 'Positive'}
+    decision_network_inference(evidence=True, prior_information=prior_information)
+    print()
+
+    # Fund Manager
+    print("Use Case 1: Fund Manager")
+    prior_information = {'CurrentAccount': 'Negative', 'GDP': 'Negative', 'InflationRate': 'Negative'}
+    decision_network_inference(evidence=True, prior_information=prior_information)
+    print()

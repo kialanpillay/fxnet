@@ -19,9 +19,10 @@ def main():
 
     if args.predict:
         df = preprocessing.load()
-        inference.decision_network_inference(df=df, evidence=args.evidence)
+        inference.decision_network_inference(evidence=args.evidence, df=df)
         if args.test:
             evaluation.backtest()
+            evaluation.use_case()
 
 
 if __name__ == "__main__":

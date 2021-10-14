@@ -15,7 +15,7 @@ def bayesian_network_inference(bn, target, evidence={}):
     return ie.posterior(target)
 
 
-def decision_network_inference(df=None, evidence=False, year=None):
+def decision_network_inference(evidence=False, df=None, prior_information={}, year=None):
     dn = networks.decision_network()
     ie = gum.ShaferShenoyLIMIDInference(dn)
 
@@ -23,7 +23,7 @@ def decision_network_inference(df=None, evidence=False, year=None):
         mask = (df['Date'] >= str(date(year - 1, 1, 1))) & (df['Date'] < str(date(year, 1, 1)))
         df = df.loc[mask]
 
-    if evidence:
+    if evidence and df is not None:
         ie.addEvidence('GDP', hard_evidence(df['GDP'].values, 'GDP'))
         ie.addEvidence('InterestRate', hard_evidence(df['INTRATE'].values, 'InterestRate'))
         ie.addEvidence('PPI', hard_evidence(df['PPI'].values, 'PPI'))
@@ -31,6 +31,10 @@ def decision_network_inference(df=None, evidence=False, year=None):
         ie.addEvidence('InflationRate', hard_evidence(df['INFRATE'].values, 'InflationRate'))
         ie.addEvidence('CurrentAccount', hard_evidence(df['BOP'].values, 'CurrentAccount'))
         ie.addEvidence('TermsOfTrade', hard_evidence(df['TERMTRADE'].values, 'TermsOfTrade'))
+
+    if evidence and prior_information:
+        for name, state in prior_information.items():
+            ie.addEvidence(name, convert_evidence(state, name))
 
     ie.makeInference()
     var = ie.posteriorUtility('Trade').variable('Trade')
@@ -62,6 +66,31 @@ def hard_evidence(feature, name):
         if e / e_ > 1.01:
             return [1, 0, 0]
         elif e / e_ < 0.99:
+            return [0, 0, 1]
+        else:
+            return [0, 1, 0]
+    else:
+        pass
+
+
+def convert_evidence(state, name):
+    s = state
+    if name == 'InterestRate':
+        if s == 'Positive':
+            return [1, 0, 0]
+        elif s == 'Equal':
+            return [0, 1, 0]
+        else:
+            return [0, 0, 1]
+    elif name in ['InflationRate', 'GDP', 'PPI', 'PublicDebt', 'CurrentAccount', 'TermsOfTrade']:
+        if s == 'Positive':
+            return [1, 0]
+        else:
+            return [0, 1]
+    elif name == 'ClosePrice':
+        if s == 'Up':
+            return [1, 0, 0]
+        elif s == 'Down':
             return [0, 0, 1]
         else:
             return [0, 1, 0]
