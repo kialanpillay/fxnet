@@ -60,7 +60,7 @@ python3 app.py --test
 
 EUR/USD Trading Decision Support
 ```
-python3 app.py --test --predict
+python3 app.py --predict
 ```
 
 EUR/USD Trading Decision Support w/ Available Evidence
