@@ -220,7 +220,7 @@ def decision_network():
     dn.addArc(dn.idFromName('Trade'), dn.idFromName('TradeUtility'))
 
     dn.utility(dn.idFromName('TradeUtility'))[{'ClosePrice': 'Up'}] = [[100], [20], [-100]]
-    dn.utility(dn.idFromName('TradeUtility'))[{'ClosePrice': 'Sideways'}] = [[20], [30], [20]]
+    dn.utility(dn.idFromName('TradeUtility'))[{'ClosePrice': 'Sideways'}] = [[20], [40], [20]]
     dn.utility(dn.idFromName('TradeUtility'))[{'ClosePrice': 'Down'}] = [[-100], [20], [100]]
 
     gum.saveBN(dn, 'output/fxnet.bifxml')

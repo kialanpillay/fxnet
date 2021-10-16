@@ -79,7 +79,7 @@ def use_case():
 
     # Company
     print("Use Case 2: Company")
-    prior_information = {'PPI': 'Positive'}
+    prior_information = {'PPI': 'Positive', 'PublicDebt': 'Positive'}
     print("Prior Information: ", prior_information)
     decision_network_inference(evidence=True, prior_information=prior_information)
     print()
