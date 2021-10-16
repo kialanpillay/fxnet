@@ -50,17 +50,25 @@ participants
 
 ## User Manual
 
-Bayesian Network Inference Test
+FXNet Tests
+1. Bayesian Network Inference Test
+1. Decision Network Profit/Loss Backtest
+3. Decision Network Use Case Simulation
 ```
 python3 app.py --test
 ```
 
-Decision Network Inference
+EUR/USD Trading Decision Support
 ```
 python3 app.py --test --predict
 ```
 
-EUR/USD Trading Decision Support
+EUR/USD Trading Decision Support w/ Available Evidence
 ```
 python3 app.py --predict --evidence
+```
+
+FXNet Interactive Mode
+```
+python3 app.py --interactive
 ```
