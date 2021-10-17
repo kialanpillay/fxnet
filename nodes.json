@@ -1,12 +1,12 @@
 {
   "InterestRate": ["Positive", "Equal", "Negative"],
-  "InflationRate": ["Positive, Negative"],
-  "GDP": ["Positive, Negative"],
-  "PPI": ["Positive, Negative"],
-  "PublicDebt": ["Positive, Negative"],
-  "CurrentAccount": ["Positive, Negative"],
-  "TermsOfTrade": ["Positive, Negative"],
-  "USDSentiment": ["Positive, Negative"],
-  "ClosePrice": ["Up, Sideways, Down"],
-  "USPoliticalState": ["Stable, Unstable"]
+  "InflationRate": ["Positive", "Negative"],
+  "GDP": ["Positive", "Negative"],
+  "PPI": ["Positive", "Negative"],
+  "PublicDebt": ["Positive", "Negative"],
+  "CurrentAccount": ["Positive", "Negative"],
+  "TermsOfTrade": ["Positive", "Negative"],
+  "USDSentiment": ["Positive", "Negative"],
+  "ClosePrice": ["Up", "Sideways", "Down"],
+  "USPoliticalState": ["Stable", "Unstable"]
 }
