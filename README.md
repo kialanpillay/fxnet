@@ -49,6 +49,12 @@ sell, or not trade the EUR/USD currency pair to improve the long-term investment
 participants
 
 ## User Manual
+Installation
+```
+python3 -m venv venv
+source ./venv/bin/activate
+pip3 install -Ur requirements.txt
+```
 
 FXNet Tests
 1. Bayesian Network Inference Test
