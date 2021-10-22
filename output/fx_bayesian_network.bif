@@ -75,27 +75,27 @@ probability (USDSentiment | USPoliticalState) {
 }
 probability (ClosePrice | USDSentiment, InterestRate, TermsOfTrade, InflationRate) {
    (Positive, Positive, Positive, Positive) 0.3 0.4 0.3;
-   (Negative, Positive, Positive, Positive) 0 0 0;
+   (Negative, Positive, Positive, Positive) 0.6 0.2 0.2;
    (Positive, Equal, Positive, Positive) 0.2 0.2 0.6;
    (Negative, Equal, Positive, Positive) 0.5 0.3 0.2;
    (Positive, Negative, Positive, Positive) 0.1 0.1 0.8;
    (Negative, Negative, Positive, Positive) 0.3 0.4 0.3;
    (Positive, Positive, Negative, Positive) 0.3 0.2 0.5;
    (Negative, Positive, Negative, Positive) 0.3 0.4 0.3;
-   (Positive, Equal, Negative, Positive) 0 0 0;
+   (Positive, Equal, Negative, Positive) 0.05 0.05 0.9;
    (Negative, Equal, Negative, Positive) 0.3 0.3 0.6;
    (Positive, Negative, Negative, Positive) 0.05 0.05 0.9;
-   (Negative, Negative, Negative, Positive) 0 0 0;
+   (Negative, Negative, Negative, Positive) 0.3 0.4 0.3;
    (Positive, Positive, Positive, Negative) 0.5 0.3 0.2;
    (Negative, Positive, Positive, Negative) 0.9 0.05 0.05;
    (Positive, Equal, Positive, Negative) 0.6 0.2 0.2;
    (Negative, Equal, Positive, Negative) 0.8 0.2 0.2;
-   (Positive, Negative, Positive, Negative) 0 0 0;
+   (Positive, Negative, Positive, Negative) 0.3 0.4 0.3;
    (Negative, Negative, Positive, Negative) 0.6 0.2 0.2;
-   (Positive, Positive, Negative, Negative) 0 0 0;
-   (Negative, Positive, Negative, Negative) 0.6 0.2 0.2;
+   (Positive, Positive, Negative, Negative) 0.3 0.4 0.3;
+   (Negative, Positive, Negative, Negative) 0.5 0.3 0.2;
    (Positive, Equal, Negative, Negative) 0.2 0.3 0.5;
-   (Negative, Equal, Negative, Negative) 0 0 0;
+   (Negative, Equal, Negative, Negative) 0.2 0.3 0.5;
    (Positive, Negative, Negative, Negative) 0.15 0.15 0.7;
    (Negative, Negative, Negative, Negative) 0.2 0.4 0.4;
 }
